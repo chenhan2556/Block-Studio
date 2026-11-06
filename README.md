@@ -11,6 +11,14 @@ npm run dev
 
 Open the local URL printed by Vite. To create a production build, run `npm run build`.
 
+## Publish on GitHub Pages
+
+1. Push this repository to GitHub's `main` or `master` branch.
+2. In the repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**.
+3. The included workflow builds and deploys the site on every push to `main` or `master`. Open **Actions** to check deployment progress; the published URL appears under **Settings → Pages**.
+
+The Vite configuration automatically uses the repository subpath for project sites and the root path for `*.github.io` user or organization sites.
+
 ## Features
 
 - Rotate, pan, and zoom the 3D workspace.
