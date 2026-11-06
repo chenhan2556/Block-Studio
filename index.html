@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f7fb" />
+    <meta
+      name="description"
+      content="Block Studio 3D 積木工作台：自由組裝立體積木，同步檢視前視圖、右視圖與俯視圖。"
+    />
+    <title>Block Studio — 3D 積木工作台</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Block Studio 首頁">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>block<span class="brand-light">studio</span></span>
+        </a>
+        <nav class="main-nav" aria-label="主要功能">
+          <button class="nav-link active" data-page="editor">工作台</button>
+          <button class="nav-link" data-page="gallery">範例圖鑑</button>
+          <button class="nav-link" data-page="guide">操作指南</button>
+        </nav>
+        <div class="topbar-actions">
+          <span class="save-status"><span class="status-dot"></span><span id="save-status">已儲存</span></span>
+          <button class="button button-dark" id="save-button">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h10l2.5 2.5v10.5H3.5V3.5H4Z"/><path d="M6.5 3.5v5h7v-5M6.5 16v-5h7v5"/></svg>
+            儲存作品
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="page active" id="page-editor">
+          <div class="page-heading">
+            <div>
+              <div class="eyebrow"><span class="eyebrow-line"></span>3D BUILDING STUDIO</div>
+              <h1>把想像，堆疊成形。</h1>
+              <p class="page-subtitle">自由組裝你的立體積木，從每一個角度看見作品。</p>
+            </div>
+            <div class="heading-meta">
+              <span class="live-indicator"></span>
+              <span>即時 3D 工作台</span>
+            </div>
+          </div>
+
+          <div class="workspace">
+            <aside class="control-panel">
+              <div class="panel-topline">
+                <div>
+                  <span class="section-kicker">YOUR MODEL</span>
+                  <h2>積木編輯器</h2>
+                </div>
+                <button class="icon-button" id="reset-button" title="重設作品" aria-label="重設作品">
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 5.5h13M8 3.5h4M6 5.5l.7 11h6.6l.7-11M8.2 8.5v5M11.8 8.5v5"/></svg>
+                </button>
+              </div>
+
+              <div class="block-count-card">
+                <span class="count-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+                <div><span class="count-label">積木總數</span><strong><span id="block-count">0</span><small> 個</small></strong></div>
+                <span class="count-caption">持續堆疊中</span>
+              </div>
+
+              <div class="control-section">
+                <div class="control-heading"><span>積木操作</span><span class="heading-rule"></span></div>
+                <div class="action-row">
+                  <button class="button button-primary" id="add-button">
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg>
+                    新增積木
+                  </button>
+                  <button class="button button-outline" id="remove-button" title="刪除選取積木">
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M8 6V4h4v2m-6 0 .7 10h6.6L14 6m-5 3v4m2-4v4"/></svg>
+                    刪除
+                  </button>
+                </div>
+                <p class="helper-text">點選積木選取，再點擊相鄰面即可延伸。</p>
+              </div>
+
+              <div class="control-section random-section">
+                <div class="control-heading"><span>隨機生成積木</span><span class="heading-rule"></span></div>
+                <label class="random-label" for="random-count">指定積木數量</label>
+                <div class="random-row">
+                  <input id="random-count" type="number" min="1" max="500" step="1" value="20" inputmode="numeric" aria-describedby="random-help" />
+                  <button class="button button-primary" id="generate-button">隨機生成</button>
+                </div>
+                <p class="helper-text" id="random-help">輸入 1–500 個，生成相連立體積木與同步三視圖。</p>
+              </div>
+
+              <div class="control-section move-section">
+                <div class="control-heading"><span>移動選取積木</span><span class="heading-rule"></span></div>
+                <div class="move-pad" aria-label="積木移動方向">
+                  <span class="move-axis axis-z">前後</span>
+                  <button class="move-button move-up" data-move="0,0,-1" aria-label="往後移動">↑</button>
+                  <button class="move-button move-left" data-move="-1,0,0" aria-label="往左移動">←</button>
+                  <button class="move-center" aria-label="移動方向中心"><span></span></button>
+                  <button class="move-button move-right" data-move="1,0,0" aria-label="往右移動">→</button>
+                  <button class="move-button move-down" data-move="0,0,1" aria-label="往前移動">↓</button>
+                  <span class="move-axis axis-y">高度</span>
+                </div>
+                <div class="height-controls">
+                  <span>上下堆疊</span>
+                  <div class="height-buttons">
+                    <button class="height-button" data-move="0,1,0" aria-label="向上移動">＋</button>
+                    <button class="height-button" data-move="0,-1,0" aria-label="向下移動">−</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel-footer">
+                <div class="history-buttons">
+                  <button class="button button-quiet" id="undo-button" disabled>
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 6 3.5 9.5l4 3.5M4 9.5h7a5 5 0 0 1 5 5"/></svg>復原
+                  </button>
+                  <button class="button button-quiet" id="redo-button" disabled>
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12.5 6 4 3.5-4 3.5m3.5-3.5H9a5 5 0 0 0-5 5"/></svg>重做
+                  </button>
+                </div>
+                <span class="keyboard-hint">點選積木後可移動</span>
+              </div>
+            </aside>
+
+            <div class="visual-area">
+              <div class="viewport-toolbar">
+                <div class="viewport-label"><span class="orbit-icon" aria-hidden="true">◉</span><strong>立體工作區</strong><span class="viewport-divider"></span><span>拖曳旋轉 · 滾輪縮放</span></div>
+                <button class="view-reset" id="camera-reset"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 8a6.5 6.5 0 1 1 1.8 6.1M3.5 3.5v4.7h4.7"/></svg>重設視角</button>
+              </div>
+              <div class="canvas-wrap">
+                <canvas id="main-canvas" aria-label="可互動的 3D 積木工作區"></canvas>
+                <div class="canvas-tip"><span class="tip-dot"></span>點選積木以編輯</div>
+                <div class="orientation-cube" aria-hidden="true">
+                  <span class="orient-top">上</span><span class="orient-front">前</span><span class="orient-side">右</span>
+                </div>
+              </div>
+              <div class="views-heading">
+                <div><span class="section-kicker">ORTHOGRAPHIC VIEWS</span><h2>三視圖</h2></div>
+                <div class="view-options">
+                  <label class="views-toggle" for="show-views">
+                    <input id="show-views" type="checkbox" />
+                    顯示三視圖
+                  </label>
+                  <span class="sync-label"><span></span>與立體模型同步</span>
+                </div>
+              </div>
+              <p class="projection-help" id="projection-help">勾選顯示三視圖；點選前視圖中的積木或格點，可查看對應位置。</p>
+              <div class="orthographic-grid" id="orthographic-grid" hidden>
+                <article class="view-card">
+                  <div class="view-card-header"><span>01</span><strong>前視圖</strong><span class="view-direction">點選位置</span></div>
+                  <div class="mini-canvas-wrap">
+                    <canvas id="front-canvas" aria-label="積木前視圖；點選積木或格點以定位"></canvas>
+                    <div class="projection-overlay" id="front-projection" aria-hidden="true" hidden><span class="projection-line projection-horizontal"></span><span class="projection-line projection-vertical"></span><span class="projection-point"></span></div>
+                  </div>
+                </article>
+                <article class="view-card">
+                  <div class="view-card-header"><span>02</span><strong>右視圖</strong><span class="view-direction">RIGHT</span></div>
+                  <div class="mini-canvas-wrap">
+                    <canvas id="right-canvas" aria-label="積木右視圖"></canvas>
+                    <div class="projection-overlay" id="right-projection" aria-hidden="true" hidden><span class="projection-line projection-horizontal"></span><span class="projection-line projection-vertical"></span><span class="projection-point"></span></div>
+                  </div>
+                </article>
+                <article class="view-card">
+                  <div class="view-card-header"><span>03</span><strong>俯視圖</strong><span class="view-direction">TOP</span></div>
+                  <div class="mini-canvas-wrap">
+                    <canvas id="top-canvas" aria-label="積木俯視圖"></canvas>
+                    <div class="projection-overlay" id="top-projection" aria-hidden="true" hidden><span class="projection-line projection-horizontal"></span><span class="projection-line projection-vertical"></span><span class="projection-point"></span></div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+          <footer class="page-footer"><span>BLOCK STUDIO <span class="footer-dot">·</span> 3D CREATIVE SPACE</span><span>每一塊積木，都能成為新的可能。</span></footer>
+        </section>
+
+        <section class="page secondary-page" id="page-gallery">
+          <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span>GET INSPIRED</div><h1>從一個靈感開始。</h1><p class="page-subtitle">挑選一個範例，載入工作台後繼續編輯。</p></div></div>
+          <div class="gallery-grid">
+            <button class="gallery-card" data-sample="starter"><span class="sample-art art-starter"><i></i><i></i><i></i><i></i><i></i></span><span class="sample-meta"><span><strong>初始造型</strong><small>簡單的立體堆疊</small></span><span class="sample-arrow">↗</span></span></button>
+            <button class="gallery-card" data-sample="stairs"><span class="sample-art art-stairs"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="sample-meta"><span><strong>階梯練習</strong><small>沿著高度延伸形狀</small></span><span class="sample-arrow">↗</span></span></button>
+            <button class="gallery-card" data-sample="tower"><span class="sample-art art-tower"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="sample-meta"><span><strong>方塊高塔</strong><small>建立向上堆疊的結構</small></span><span class="sample-arrow">↗</span></span></button>
+          </div>
+          <div class="gallery-note"><span class="note-sparkle">✳</span><span>選擇範例會載入工作台，你可以繼續新增、移動或刪除積木。</span></div>
+        </section>
+
+        <section class="page secondary-page" id="page-guide">
+          <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span>QUICK START</div><h1>簡單幾步，開始創作。</h1><p class="page-subtitle">用直覺的操作，把腦海裡的形狀搭建出來。</p></div></div>
+          <div class="guide-grid">
+            <article class="guide-card"><span class="guide-number">01</span><div class="guide-icon">⟳</div><h2>旋轉與觀察</h2><p>在立體工作區拖曳滑鼠來旋轉視角，使用滾輪縮放。下方三視圖會即時呈現前、右、上方的投影。</p><span class="guide-tag">檢視模型</span></article>
+            <article class="guide-card"><span class="guide-number">02</span><div class="guide-icon">＋</div><h2>新增與延伸</h2><p>點選一塊積木，再點擊它相鄰的面來延伸作品；也可以使用「新增積木」按鈕，在旁邊加入新的方塊。</p><span class="guide-tag">自由組裝</span></article>
+            <article class="guide-card"><span class="guide-number">03</span><div class="guide-icon">↔</div><h2>移動與調整</h2><p>先選取要移動的積木，再使用方向鍵或上下堆疊按鈕。每一塊積木都能獨立移動或刪除。</p><span class="guide-tag">精細編輯</span></article>
+            <article class="guide-card"><span class="guide-number">04</span><div class="guide-icon">▣</div><h2>儲存你的作品</h2><p>按下「儲存作品」可將作品保存在這台裝置的瀏覽器中。下次開啟時會自動載入最近一次儲存的內容。</p><span class="guide-tag">安心保存</span></article>
+          </div>
+          <button class="button button-primary guide-cta" data-go-editor>開始組裝 <span>→</span></button>
+        </section>
+      </main>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
